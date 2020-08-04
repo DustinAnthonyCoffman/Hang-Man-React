@@ -14,7 +14,7 @@ const { v4: uuidv4 } = require('uuid');
 class Hangman extends Component {
   /** by default, allow 6 guesses and use provided gallows images. */
   static defaultProps = {
-    maxWrong: 6,
+    maxWrong: randomWord().length,
     images: [img0, img1, img2, img3, img4, img5, img6]
   };
 
@@ -65,14 +65,15 @@ class Hangman extends Component {
   }
   /** render: render game */
   render() {
+    console.log(this.state.answer)
     return (
       <div className='Hangman'>
         <h1>Hangman</h1>
         <img src={this.props.images[this.state.nWrong]} alt={this.state.nWrong} />
         <h3>Wrong Guesses: {this.state.nWrong}</h3>
-
+    <h1>{this.state.answer === this.guessedWord().join("") ? 'You Win!!' : ''}</h1>
         <p className='Hangman-word'>{this.guessedWord()}</p>
-        {this.state.nWrong !== this.props.maxWrong ? <p className='Hangman-btns'>{this.generateButtons()}</p> : <div><h2>You Lose!!</h2> <button id="reload" onClick={this.restart}>Play Again?</button> </div>}
+        {this.state.nWrong !== this.props.maxWrong ? <p className='Hangman-btns'>{this.generateButtons()}</p> : <div><h2>You Lose!! The word was {this.state.answer}</h2> <button id="reload" onClick={this.restart}>Play Again?</button> </div>}
       </div>
     );
   }
